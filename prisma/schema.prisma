@@ -12,3 +12,10 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
+model Post {
+  id Int      @id @default(auoincrement())
+  title       String  
+  description String  
+  createdAt   DateTime @default(now())
+}
