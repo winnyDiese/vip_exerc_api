@@ -5,6 +5,7 @@ import express, { Request, Response } from "express";
 const app = express()
 const prisma = new PrismaClient()
 
+app.use(express.json())
 
 app.get('/', async (req:Request, res:Response) => {
     try {
@@ -18,14 +19,11 @@ app.get('/', async (req:Request, res:Response) => {
 app.post('/', async (req:Request, res:Response):Promise<void> => {
     const {title, description} = req.body
 
-    if(!title || !description){
-        res.status(400).json({error : "Title and description is required "})
-    }
+    if(!title || !description)  res.status(400).json({error : "Title and description is required "})
+    
 
     try {
-        const new_enter = await prisma.prisma_test.create({
-            data:{title, description}
-        })
+        const new_enter = await prisma.prisma_test.create({ data:{title, description} })
         res.status(201).json(new_enter)
     } catch (error) {
         console.log(error)
